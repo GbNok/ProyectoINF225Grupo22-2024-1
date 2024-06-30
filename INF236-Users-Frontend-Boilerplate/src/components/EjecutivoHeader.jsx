@@ -7,7 +7,6 @@ import { useParams, Link } from "react-router-dom";
 import useSWR from "swr";
 import logo from "../images/logo.png"
 import home from "../images/home.png"
-import jwt, { decode } from 'jsonwebtoken'
 import Grid from '@mui/material/Grid'; // Grid version 1
 
 
