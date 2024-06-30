@@ -21,39 +21,6 @@ export default class UserController {
 		res.send(users);
 	}
 	
-	// async getEjecutivos(req, res) {
-    //     const request = await User.findAll({
-    //         where: {
-    //             email: {
-    //                 [Op.like]: '%@elaclave.cl'
-    //             }
-    //         }   
-    //     });
-    //     return res.send(request);
-
-    // }
-
-	// async randomExecutive(req, res) {
-	// 	// const emailPattern = /$@elaclave.cl/;
-    //     const request = await User.findAll({
-    //         where: {
-    //             email: {
-	// 				// [Sequelize.fn('RIGHT', Sequelize.col('email'), 11)]: '@elaclave.cl'
-    //                 [Sequelize.Op.like]: "%elaclave.cl"
-    //             }
-    //         }   
-    //     });
-	// 	res.send(request)
-		
-	// 	// const request = this.getEjecutivos(req, res);
-		
-	// 	//return res.send(request[Math.floor(Math.random() * request.length)]);
-	// 	// return res.send(request);
-	// 	// return res.send(_.sample(request));
-	// }
-
-
-
 	async randomExecutive(req, res) {
 		const users = await User.findAll({
 			where: {
@@ -67,11 +34,9 @@ export default class UserController {
 	
 		const randomIndex = Math.floor(Math.random() * users.length);
 		const randomExecutive = users[randomIndex];
-		res.send({ executiveId: randomExecutive.id }); // Enviar solo el ID del ejecutivo
+		res.send({ executiveId: randomExecutive.id }); 
 	}
 	
-
-	  
 	async login(req, res) {
 		try {
 		  const { email, password } = req.body;
@@ -88,14 +53,10 @@ export default class UserController {
 	  
 		  const passwordMatch = await bcrypt.compare(password, user.password);
 	  
-		//   if (!passwordMatch) {
-		// 	return res.status(401).json({ error: 'Invalid email or password' });
-		//   }
 
 		const token = jwt.sign({ userId: user.id , nombre: user.nombre, rut: user.rut }, 3, { expiresIn: '1h' });
 		res.json({ success: true, token: token, user: { id: user.id, email: user.email } });
-		// res.json({ success: true, user: { id: user.id, email: user.email } });
-		//   res.send({ success: true, token: token, user: user });
+
 		} catch (error) {
 		  console.error('Error during login:', error);
 		  res.status(500).json({ error: 'Internal Server Error'});
@@ -129,10 +90,6 @@ export default class UserController {
 		res.send({status: "ok"});
 	}
 
-	// async getRand(req, res) {
-	// 	const user = await User.randomExecutive();
-	// 	res.send(user);
-	// }
 	
 };
 
